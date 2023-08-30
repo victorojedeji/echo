@@ -6,6 +6,9 @@ import { useState } from 'react';
 
 import { DASHBOARD } from '../lib/routes';
 
+import toast from 'react-hot-toast';
+
+
 export function useAuth() {
   const [authUser, isUserLoading, error] = useAuthState(auth);
 
@@ -24,14 +27,17 @@ export function useLogin() {
 
     try {
 
-      await signInWithEmailAndPassword({ auth, email, password })
+      await signInWithEmailAndPassword(auth, email, password)
+      toast.success("Login Successful!")
       
     }catch(error) {
-
-    }
+      toast.error(error)
+    } return false; 
 
     setIsLoginLoading(false);
+    return true; 
   }
+
 
 
   return {login, isLoginLoading }

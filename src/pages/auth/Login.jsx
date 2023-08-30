@@ -12,11 +12,9 @@ export default function Login() {
   const handleSignIn = () => {
     setLoading(true);
 
-    // Simulating an asynchronous operation (e.g., API call)
     setTimeout(() => {
-      // After the operation is done, set loading back to false
       setLoading(false);
-    }, 2000); // Simulated delay of 2 seconds
+    }, 2000);
   };
   
 
