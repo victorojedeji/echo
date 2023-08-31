@@ -18,20 +18,19 @@ export function useAuth() {
 
 export function useLogin() {
 
-  const [isLoginLoading, setIsLoginLoading] = useState();
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
 
   async function login(email, password, redirectTo=DASHBOARD) {
     setIsLoginLoading(true);
-
-
     try {
 
       await signInWithEmailAndPassword(auth, email, password)
       toast.success("Login Successful!")
       
     }catch(error) {
-      toast.error(error)
+      toast.error('Login Failed!')
+      setIsLoginLoading(false);
     } return false; 
 
     setIsLoginLoading(false);
