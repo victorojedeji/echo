@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { DASHBOARD } from '../lib/routes';
 
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 export function useAuth() {
@@ -19,15 +20,15 @@ export function useAuth() {
 export function useLogin() {
 
   const [isLoginLoading, setIsLoginLoading] = useState(false);
+  const navigate = useNavigate();
 
 
-  async function login(email, password, redirectTo=DASHBOARD) {
+  async function login({email, password, redirectTo = DASHBOARD}) {
     setIsLoginLoading(true);
     try {
-
       await signInWithEmailAndPassword(auth, email, password)
       toast.success("Login Successful!")
-      
+      navigate(redirectTo);
     }catch(error) {
       toast.error('Login Failed!')
       setIsLoginLoading(false);

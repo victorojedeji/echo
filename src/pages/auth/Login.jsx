@@ -52,7 +52,7 @@ export default function Login() {
     const success = await login({
       email: email,
       password: password,
-      redirectTo: DASHBOARD
+      redirectTo: DASHBOARD,
     });
     
     if (success) {
