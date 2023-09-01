@@ -8,16 +8,16 @@ export default function Layout() {
   const {pathname}= useLocation();
   const navigate = useNavigate();
 
-  const { user, isUserLoading }= useAuth();
+  const { user, isDataLoading }= useAuth();
 
   
   useEffect(() => {
-    if( pathname.startsWith("/auth") && !user ){
+    if(!isDataLoading && pathname.startsWith("/auth") && !user ){
       navigate(LOGIN);
     }
   }, [pathname, user])
   
-  if (isUserLoading) return "Loading...";
+  if (isDataLoading) return "Loading authenticated User...";
 
   return (
     <>

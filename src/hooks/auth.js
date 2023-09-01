@@ -1,14 +1,11 @@
+import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import {useAuthState, useSignOut} from 'react-firebase-hooks/auth'
 import { auth, db } from '../lib/firebase';
-
-import { useState } from 'react';
-
 import { DASHBOARD, LOGIN } from '../lib/routes';
-
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 import isUserExist from '../utils/isUserExist';
 
 
