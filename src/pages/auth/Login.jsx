@@ -193,7 +193,7 @@ export default function Login() {
           </p>
         </form>
       </div>
-      <p className='text-small mt-8'>Don't have an account? {" "} <Link to={REGISTER} className='underline text-base'>Register</Link>{" "}here!</p>
+      <p className='text-small mt-8'>Don't have an account? {" "} <Link to={REGISTER} className='underline text-base'>Sign Up</Link>{" "}here!</p>
     </div>
   )
 }

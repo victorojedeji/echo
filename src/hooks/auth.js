@@ -8,15 +8,43 @@ import { DASHBOARD, LOGIN } from '../lib/routes';
 
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import isUserExist from '../utils/isUserExist';
 
 
 export function useAuth() {
-  const [authUser, isUserLoading, error] = useAuthState(auth);
+  const [authUser, authLoading, error] = useAuthState(auth);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-  return {user: authUser, isUserLoading, error };
+  useEffect(() => {
+
+    async function fetchData() {
+      setDataLoading(true);
+      const ref = doc(db, 'users', authUser.uid)
+      const docSnapshot = await getDoc(ref)
+
+      setUser(docSnapshot.data());
+      setDataLoading(false);
+    }
+
+    if(!authLoading) {
+      if(authUser) fetchData();
+      else setDataLoading(false);
+    }
+
+  }, [authLoading])
+
+  return {user, isDataLoading, error};
 }
+
+
+
+
+
+
+
+
 
 
 export function useLogin() {
@@ -46,8 +74,13 @@ export function useLogin() {
 
 
 
+
+
+
+
+
 export function useRegister() {
-  const [isLoading, setLoading] = useState(false);
+  const [isRegisterLoading, setIsRegisterLoading] = useState(false);
   const navigate = useNavigate();
 
   async function register({
@@ -56,25 +89,19 @@ export function useRegister() {
     password,
     redirectTo = DASHBOARD,
   }) {
-    setLoading(true);
+    setIsRegisterLoading(true);
 
     const usernameExists = await isUserExist(username);
 
     if (usernameExists) {
-      toast({
-        title: "Username already exists",
-        status: "error",
-        isClosable: true,
-        position: "top",
-        duration: 5000,
-      });
-      setLoading(false);
+      toast.error('Username already exits!');
+      setIsRegisterLoading(false);
     } else {
       try {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
+        const response = await createUserWithEmailAndPassword(auth, email, password);
 
-        await setDoc(doc(db, "users", res.user.uid), {
-          id: res.user.uid,
+        await setDoc(doc(db, "users", response.user.uid), {
+          id: response.user.uid,
           username: username.toLowerCase(),
           avatar: "",
           date: Date.now(),
@@ -86,19 +113,26 @@ export function useRegister() {
       } catch (error) {
         toast.error('Registration Failed!');
       } finally {
-        setLoading(false);
+        setIsRegisterLoading(false);
       }
     }
   }
 
-  return { register, isLoading };
+  return { register, isRegisterLoading };
 }
 
 
 
 
+
+
+
+
+
+
+
 export function useLogout() {
-  const [signOut, isLogoutLoading, error] = useSignOut(auth);
+  const [signOut, isLogoutLoading] = useSignOut(auth);
   const navigate = useNavigate();
 
   async function logout() {
