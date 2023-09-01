@@ -74,7 +74,7 @@ export default function Register() {
 
       {/* <img src={logo} alt="echo logo" className='w-[256px] h-[64px]'/> */}
       <div
-        className='w-[30%] bg-white rounded-[8px] flex flex-col items-center pt-8 pb-8 pl-2 pr-2'
+        className='w-[30%] bg-white flex flex-col items-center pt-8 pb-8 pl-2 pr-2'
       >
         <h1 className='text-h5 font-bold font-head text-center'>Create your account.</h1>
         <p className='text-para text-center'>Enter the fields below to get started.</p>
@@ -86,7 +86,7 @@ export default function Register() {
               type="text"
               placeholder='Enter your username'
               className={
-                `block ${ errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[8px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`
+                `block ${ errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`
               }
               onChange={(e) => setUserName(e.target.value)}
               // required
@@ -102,7 +102,7 @@ export default function Register() {
               type="text"
               placeholder='Enter your email'
               className=
-              {`block ${errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[8px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`}
+              {`block ${errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -117,7 +117,7 @@ export default function Register() {
             <input
               type="password"
               placeholder='Enter your password'
-              className= 'block pt-2 pb-2 pr-8 pl-2 w-full rounded-[8px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50'   
+              className= 'block pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50'   
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -127,7 +127,7 @@ export default function Register() {
           </div>
           {errors.password !== null && (<div className='mt-1 text-small text-center mb-4 text-red-500'>{errors.password}</div>)}
           <button 
-            className={`w-full ${isRegisterLoading ? 'opacity-50' : 'opacity-100'} bg-base text-white rounded-[8px] pt-2 pb-2 mb-8 relative`}
+            className={`w-full ${isRegisterLoading ? 'opacity-50' : 'opacity-100'} bg-base text-white rounded-[64px] pt-2 pb-2 mb-8 relative`}
             disabled={isRegisterLoading ? true : false}
             >
           {isRegisterLoading ? 

@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import Layout from '../pages/layout';
+import Root from '../pages/root';
 
 
 export const ROOT = "/";
@@ -16,7 +17,7 @@ export const DASHBOARD = "/auth/dashboard";
 export const router = createBrowserRouter([
   {
     path: ROOT, 
-    element: 'public'
+    element: <Root/>
   },
 
   {

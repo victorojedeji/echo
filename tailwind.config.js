@@ -53,8 +53,8 @@ module.exports = {
       colors: {
         'base': '#056cf2',
         'dark': '#010626',
-        'base-dark': '#0439d9',
-        'base-light': '#0455bf',
+        'bdark': '#0439d9',
+        'blight': '#0455bf',
         'light': '#f2f2f2',
         'gray-100': '#000106',
         'gray-75': '#000106bf',

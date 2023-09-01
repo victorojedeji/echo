@@ -10,13 +10,14 @@ export default function Navbar() {
   
   
   return (
-    <header className='flex justify-between items-center pt-2 pb-2 pr-8 pl-4'>
-      <Link to= {DASHBOARD}>Home</Link>
+    <header className='flex justify-between items-center pt-2 pb-2 pr-8 pl-4 z-50'>
 
+      <div>
 
+      </div>
 
       <button 
-        className={` ${isLogoutLoading ? 'opacity-50' : 'opacity-100'} bg-base text-white rounded-[8px] pt-2 pb-2 pr-8 pl-8 block relative`}
+        className={` ${isLogoutLoading ? 'opacity-50' : 'opacity-100'} bg-base text-white rounded-[64px] pt-2 pb-2 pr-8 pl-8 block relative`}
         disabled={isLogoutLoading ? true : false}
         onClick={logout}
         >

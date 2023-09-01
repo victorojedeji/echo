@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { LOGIN } from '../../lib/routes';
 import {useAuth} from '../../hooks/auth'
 import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
 
 export default function Layout() {
   const {pathname}= useLocation();
@@ -22,7 +23,11 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <Outlet />
+
+      <div className='relative flex '>
+        <Sidebar />
+        <Outlet />
+      </div>
     </>
   )
 }
