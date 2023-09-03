@@ -86,7 +86,7 @@ export default function Register() {
               type="text"
               placeholder='Enter your username'
               className={
-                `block ${ errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`
+                `block ${ errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`
               }
               onChange={(e) => setUserName(e.target.value)}
               // required
@@ -102,7 +102,7 @@ export default function Register() {
               type="text"
               placeholder='Enter your email'
               className=
-              {`block ${errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`}
+              {`block ${errors.email === null ? 'mb-4' : 'mb-0' } pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-bas focus:outline-none focus:ring focus:border-light placeholder:text-gray-50`}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -117,7 +117,7 @@ export default function Register() {
             <input
               type="password"
               placeholder='Enter your password'
-              className= 'block pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50'   
+              className= 'block pt-2 pb-2 pr-8 pl-2 w-full rounded-[64px] border-2 border-base focus:outline-none focus:ring focus:border-light placeholder:text-gray-50'   
               onChange={(e) => setPassword(e.target.value)}
               required
             />

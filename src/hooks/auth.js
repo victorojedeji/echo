@@ -10,6 +10,7 @@ import isUserExist from '../utils/isUserExist';
 
 
 export function useAuth() {
+
   const [authUser, authLoading, error] = useAuthState(auth);
   const [isDataLoading, setDataLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -33,6 +34,7 @@ export function useAuth() {
   }, [authLoading])
 
   return {user, isDataLoading, error};
+  
 }
 
 
@@ -101,6 +103,7 @@ export function useRegister() {
           id: response.user.uid,
           username: username.toLowerCase(),
           avatar: "",
+          bio: "",
           date: Date.now(),
         });
 
