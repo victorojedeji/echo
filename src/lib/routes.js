@@ -7,6 +7,7 @@ import Root from '../pages/root';
 import Profile from '../pages/profile';
 import Users from '../pages/users';
 import Dashboard from '../pages/Dashboard';
+import Comments from '../pages/comments';
 
 
 export const ROOT = "/";
@@ -17,6 +18,7 @@ export const REGISTER = "/register";
 export const AUTH = "/auth";
 export const DASHBOARD = "/auth/posts";
 export const PROFILE = "/auth/profile/:id";
+export const COMMENTS = "/auth/comments/:postId";
 export const USERS = "/auth/users";
 
 export const router = createBrowserRouter([
@@ -48,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: USERS,
         element: <Users />
+      },
+      {
+        path: COMMENTS,
+        element: <Comments />
       },
     ]
   },

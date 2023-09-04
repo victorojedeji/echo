@@ -26,7 +26,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='w-[70vw] p-4'>
+    <div className='min-w-[55vw] p-4'>
       <h1 className='text-h5 text-gray-600 font-head font-medium mb-16'>Home</h1>
 
       <div className='bg-gray-05 p-4 rounded-[8px]'>
