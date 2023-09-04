@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { DASHBOARD, LOGIN } from '../lib/routes'
 import { useLogout } from '../hooks/auth';
-
+import { BiLogOutCircle } from "react-icons/bi";
 
 
 export default function Navbar() {
@@ -29,9 +29,10 @@ export default function Navbar() {
               </svg>
               Processing...
             </div>
-              ) : (
-                "Logout"
-              )}
+              ) : <div className='flex items-center justify-center gap-2'>
+                    <BiLogOutCircle className='font-h5'/> <span>Logout</span> 
+                  </div> 
+          }
               
       </button>
     </header>

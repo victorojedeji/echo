@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RenderAvatar from '../../components/Avatar';
 import TextareaAutosize from 'react-textarea-autosize';
 import { BsPen } from "react-icons/bs";
-import { useAddPost } from '../../hooks/posts';
+import { useAddPost, usePosts } from '../../hooks/posts';
 import { useAuth } from '../../hooks/auth'
 import PostsList from './PostsList';
 
@@ -11,8 +11,10 @@ export default function Dashboard() {
   const [text, setText] = useState('');
   const {addPost, IsPostLoading} = useAddPost();
   const {user, isDataLoading} = useAuth();
+  const {posts, postsLoading} = usePosts();
 
 
+  if (postsLoading) return 'Posts Loading...'
   
   function handlePublicPost(e) {
     e.preventDefault();
@@ -66,7 +68,7 @@ export default function Dashboard() {
       </div>
 
 
-      <PostsList posts={[1, 2, 3, 4]} />
+      <PostsList posts={posts} />
     </div>
   )
 }

@@ -3,6 +3,8 @@ import { BsPencilSquare } from "react-icons/bs";
 import { useAuth } from '../../hooks/auth';
 import { ImCancelCircle } from "react-icons/im";
 import RenderAvatar from '../../components/Avatar';
+import { Link } from 'react-router-dom';
+import { AUTH } from '../../lib/routes';
 
 
 
@@ -24,7 +26,9 @@ if (isDataLoading) return 'Loading...';
           <RenderAvatar user={user} size={"192"} />
           <div className='w-[40%]'>
             <h1 className='text-small text-head'>Username</h1>
-            <p className='text-h5 font-normal text-gray-75 mb-4'>@{user.username}</p>
+            <Link to={`${AUTH}/profile/${user.id}`}>
+              <p className='text-h5 font-normal text-gray-75 mb-4 hover:underline'>@{user.username}</p>
+            </Link>
             <h1 className='text-small text-head'>Bio</h1>
             {user.bio == '' ? (
               <p className='text-small italic'>Update your bio!</p>
