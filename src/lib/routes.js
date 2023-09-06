@@ -1,19 +1,17 @@
-import React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
-import Layout from '../pages/layout';
-import Root from '../pages/root';
-import Profile from '../pages/profile';
-import Users from '../pages/users';
-import Dashboard from '../pages/Dashboard';
-import Comments from '../pages/comments';
-
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import Layout from "../pages/layout";
+import Root from "../pages/root";
+import Profile from "../pages/profile";
+import Users from "../pages/users";
+import Dashboard from "../pages/Dashboard";
+import Comments from "../pages/comments";
 
 export const ROOT = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
-
 
 export const AUTH = "/auth";
 export const DASHBOARD = "/auth/posts";
@@ -23,17 +21,17 @@ export const USERS = "/auth/users";
 
 export const router = createBrowserRouter([
   {
-    path: ROOT, 
-    element: <Root/>
+    path: ROOT,
+    element: <Root />,
   },
 
   {
-    path: LOGIN, 
-    element: <Login />
+    path: LOGIN,
+    element: <Login />,
   },
   {
     path: REGISTER,
-    element: <Register />
+    element: <Register />,
   },
   {
     path: AUTH,
@@ -41,21 +39,20 @@ export const router = createBrowserRouter([
     children: [
       {
         path: DASHBOARD,
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: PROFILE,
-        element: <Profile />
+        element: <Profile />,
       },
       {
         path: USERS,
-        element: <Users />
+        element: <Users />,
       },
       {
         path: COMMENTS,
-        element: <Comments />
+        element: <Comments />,
       },
-    ]
+    ],
   },
-])
-
+]);

@@ -12,7 +12,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from '../lib/firebase';
+import { db } from "../lib/firebase";
 import { useState } from "react";
 import {
   useCollectionData,
@@ -27,7 +27,7 @@ export function useAddPost() {
     setPostLoading(true);
     const id = uuidv4();
     await setDoc(doc(db, "posts", id), {
-      ...post,  
+      ...post,
       id,
       date: Date.now(),
       likes: [],
@@ -84,9 +84,6 @@ export function useDeletePost(id) {
       setDeleteLoading(true);
 
       await deleteDoc(doc(db, "posts", id));
-
-
-
 
       const q = query(collection(db, "comments"), where("postID", "==", id));
       const querySnapshot = await getDocs(q);

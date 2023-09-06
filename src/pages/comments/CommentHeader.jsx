@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import RenderAvatar from "./Avatar";
-import { useUser } from "../hooks/users";
+import RenderAvatar from "../../components/Avatar";
+import { useUser } from "../../hooks/users";
 import { formatDistanceToNow } from "date-fns";
-import UserNameBtn from "./UserNameBtn";
+import UserNameBtn from "../../components/UserNameBtn";
 import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
-import { useDeletePost } from "../hooks/posts";
+import { useDeletePost } from "../../hooks/posts";
 
-export default function PostHeader({ post }) {
-  const { id, uid, date } = post;
+export default function CommentHeader({ comment }) {
+  const { id, uid, date } = comment;
   const [toggleOptions, setToggleOptions] = useState(false);
   const { deletePost, deleteLoading } = useDeletePost(id);
   const { user, isLoading } = useUser(uid);
-
+ 
   if (isLoading) return "Loading...";
 
   const handleOption = () => {
