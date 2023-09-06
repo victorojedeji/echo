@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import RenderAvatar from "../../components/Avatar";
 import { useAddComment } from "../../hooks/comments";
 import { useUser } from "../../hooks/users";
+import { useAuth } from "../../hooks/auth";
 
 export default function CommentForm({ post }) {
-  const { uid, id: postId } = post;
-  const {user , isLoading} = useUser(uid);
+  const { id: postId } = post;
+  const {user, isDataLoading} = useAuth();
+  // const {user , isLoading} = useUser(currentUser.uid);
   const [newComment, setNewComment] = useState("");
   const { addComment, isNewCommentLoading } = useAddComment({
     postId,
     uid: user?.id,
   });
+
+  console.log(user?.id)
 
   // useEffect(() => {
   //   if ( isNewCommentLoading || !user?.id ) {
@@ -41,7 +45,7 @@ export default function CommentForm({ post }) {
           onChange={(e) => setNewComment(e.target.value)}
         />
         <button className="bg-base pl-4 pr-4 pt-2 pb-2 rounded-[64px] text-white text-center">
-          {isNewCommentLoading || isLoading ? (
+          {isNewCommentLoading || isDataLoading ? (
             <svg
               className="animate-spin h-5 w-5 mr-3"
               xmlns="http://www.w3.org/2000/svg"

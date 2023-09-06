@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import RenderAvatar from "../../components/Avatar";
 import { useUser } from "../../hooks/users";
 import { formatDistanceToNow } from "date-fns";
-import UserNameBtn from "../../components/UserNameBtn";
 import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
-import { useDeletePost } from "../../hooks/posts";
+import { useDeleteComment } from "../../hooks/comments";
+import { useAuth } from "../../hooks/auth";
 
 export default function CommentHeader({ comment }) {
   const { id, uid, date } = comment;
   const [toggleOptions, setToggleOptions] = useState(false);
-  const { deletePost, deleteLoading } = useDeletePost(id);
   const { user, isLoading } = useUser(uid);
- 
+  const { deleteComment, deleteLoading } = useDeleteComment(id);
+  const { user: authUser, isLoading: authLoading } = useAuth();
+
   if (isLoading) return "Loading...";
 
   const handleOption = () => {
@@ -24,26 +25,30 @@ export default function CommentHeader({ comment }) {
       <div className="flex items-center gap-4 pb-2 ">
         <RenderAvatar user={user} size={"36"} />
         <div className="">
-          <UserNameBtn user={user} />
+          <button>{user?.username}</button>
           <p className="text-small text-gray-50">
             {formatDistanceToNow(date)} ago
           </p>
         </div>
       </div>
 
-      <button
-        className="text-para w-[64px] flex justify-end items-center"
-        onClick={handleOption}
-      >
-        <BsThreeDots />
-      </button>
+      {authUser?.id === uid ? (
+        <button
+          className="text-para w-[64px] flex justify-end items-center"
+          onClick={handleOption}
+        >
+          <BsThreeDots />
+        </button>
+      ) : (
+        ""
+      )}
 
-      {toggleOptions && (
+      {toggleOptions && (!authLoading && authUser.id) === uid && (
         <div className="absolute right-0 top-10 bg-white p-4 rounded-[8px]">
           {!deleteLoading ? (
             <button
               className="flex gap-2 items-center pt-2 mb-2"
-              onClick={deletePost}
+              onClick={deleteComment}
             >
               <FiDelete className="text-red-600 text-small" />
               <span className="text-small text-red-600">Delete</span>
@@ -77,3 +82,5 @@ export default function CommentHeader({ comment }) {
     </div>
   );
 }
+
+// toggleOptions && (!authLoading && authUser.id ) === uid &&

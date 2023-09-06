@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import RenderAvatar from "./Avatar";
 import { useUser } from "../hooks/users";
 import { formatDistanceToNow } from "date-fns";
-import UserNameBtn from "./UserNameBtn";
 import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
 import { useDeletePost } from "../hooks/posts";
@@ -24,7 +23,7 @@ export default function PostHeader({ post }) {
       <div className="flex items-center gap-4 pb-2 ">
         <RenderAvatar user={user} size={"36"} />
         <div className="">
-          <UserNameBtn user={user} />
+          <button>{user?.username}</button>
           <p className="text-small text-gray-50">
             {formatDistanceToNow(date)} ago
           </p>

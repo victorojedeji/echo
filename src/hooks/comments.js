@@ -45,19 +45,19 @@ export function useComments(postId) {
 }
 
 export function useDeleteComment(id) {
-  const [isLoading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   async function deleteComment() {
     const res = window.confirm("Are you sure you want to delete this comment?");
 
     if (res) {
-      setLoading(true);
+      setDeleteLoading(true);
       const docRef = doc(db, "comments", id);
-      await deleteDoc(docRef);
+      await deleteDoc(docRef); 
       toast.success("Comment deleted!");
-      setLoading(false);
+      setDeleteLoading(false);
     }
   }
 
-  return { deleteComment, isLoading };
+  return { deleteComment, deleteLoading };
 }
