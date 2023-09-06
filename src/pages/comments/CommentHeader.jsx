@@ -82,5 +82,3 @@ export default function CommentHeader({ comment }) {
     </div>
   );
 }
-
-// toggleOptions && (!authLoading && authUser.id ) === uid &&
