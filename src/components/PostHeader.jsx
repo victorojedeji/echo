@@ -5,6 +5,7 @@ import { formatDistanceToNow } from "date-fns";
 import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
 import { useDeletePost } from "../hooks/posts";
+import UserNameBtn from "./UserNameBtn";
 
 export default function PostHeader({ post }) {
   const { id, uid, date } = post;
@@ -23,7 +24,7 @@ export default function PostHeader({ post }) {
       <div className="flex items-center gap-4 pb-2 ">
         <RenderAvatar user={user} size={"36"} />
         <div className="">
-          <button>{user?.username}</button>
+          <UserNameBtn user={user}/>
           <p className="text-small text-gray-50">
             {formatDistanceToNow(date)} ago
           </p>

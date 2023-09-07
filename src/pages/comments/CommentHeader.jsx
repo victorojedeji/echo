@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
 import { useDeleteComment } from "../../hooks/comments";
 import { useAuth } from "../../hooks/auth";
+import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 export default function CommentHeader({ comment }) {
   const { id, uid, date } = comment;
@@ -13,11 +14,17 @@ export default function CommentHeader({ comment }) {
   const { user, isLoading } = useUser(uid);
   const { deleteComment, deleteLoading } = useDeleteComment(id);
   const { user: authUser, isLoading: authLoading } = useAuth();
+  const [deleteModal, setDeleteModal] = useState(false);
 
   if (isLoading) return "Loading...";
 
   const handleOption = () => {
     setToggleOptions(!toggleOptions);
+  };
+
+
+  const toggleDeleteModal = () => {
+    setDeleteModal(true)
   };
 
   return (
@@ -46,13 +53,19 @@ export default function CommentHeader({ comment }) {
       {toggleOptions && (!authLoading && authUser.id) === uid && (
         <div className="absolute right-0 top-10 bg-white p-4 rounded-[8px]">
           {!deleteLoading ? (
-            <button
+            <>
+              <button
               className="flex gap-2 items-center pt-2 mb-2"
-              onClick={deleteComment}
-            >
-              <FiDelete className="text-red-600 text-small" />
-              <span className="text-small text-red-600">Delete</span>
-            </button>
+              onClick={toggleDeleteModal}
+              >
+                <FiDelete className="text-red-600 text-small" />
+                <span className="text-small text-red-600">Delete</span>
+              </button>
+              {deleteModal && (
+                <DeleteCommentModal setDeleteModal={setDeleteModal} comment={comment} />
+              )}
+            </>
+
           ) : (
             <div>
               <svg

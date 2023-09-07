@@ -26,11 +26,6 @@ export function useUpdateAvatar(uid) {
   const navigate = useNavigate();
 
   async function updateAvatar() {
-    if (!file) {
-      toast("No file selected");
-
-      return;
-    }
 
     setLoading(true);
 
@@ -42,13 +37,14 @@ export function useUpdateAvatar(uid) {
     const docRef = doc(db, "users", uid);
     await updateDoc(docRef, { avatar: avatarURL });
 
-    toast("Profile updated!");
+    toast.success("Profile updated!");
     setLoading(false);
 
     navigate(0);
   }
 
   return {
+    file,
     setFile,
     updateAvatar,
     isLoading,

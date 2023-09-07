@@ -2,17 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AUTH } from "../lib/routes";
 
-export default function RenderAvatar({ user, size }) {
+export default function RenderAvatar({ user, size, overrideAvatar=null }) {
 
   if (!user || !size) return "Loading...";
-
   if (user?.avatar) {
+
+    const imgStyle = {
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: "100%",
+    };
     return (
       <Link to={`${AUTH}/profile/${user?.id}`}>
         <img
-          src={user.avatar}
+          src={overrideAvatar || user.avatar}
           alt="profile-pic"
-          className={`w-${size} h-${size} rounded-full cursor-pointer hover:opacity-70`}
+          style={imgStyle}
+          // className={`w-[${size}px] h-[${size}px] rounded-full cursor-pointer hover:opacity-70`}
         />
       </Link>
     );

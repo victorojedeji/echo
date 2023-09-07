@@ -4,7 +4,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { BsPen } from "react-icons/bs";
 import { useAddPost, usePosts } from "../../hooks/posts";
 import { useAuth } from "../../hooks/auth";
-import PostsList from "./PostsList";
+import PostsList from "../../components/PostsList";
 
 export default function Dashboard() {
   const [text, setText] = useState("");
@@ -37,6 +37,8 @@ export default function Dashboard() {
               placeholder="What is happening?!"
               className="resize-none p-4 w-[100%] min-h-24 border-0 text-lg font-normal text-gray-600 focus:outline-none rounded-[8px]"
               required
+              autoFocus
+              autoComplete="off"
               value={text}
               onChange={(e) => {
                 setText(e.target.value);
