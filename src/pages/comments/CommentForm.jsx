@@ -7,22 +7,12 @@ import { useAuth } from "../../hooks/auth";
 export default function CommentForm({ post }) {
   const { id: postId } = post;
   const {user, isDataLoading} = useAuth();
-  // const {user , isLoading} = useUser(currentUser.uid);
   const [newComment, setNewComment] = useState("");
   const { addComment, isNewCommentLoading } = useAddComment({
     postId,
     uid: user?.id,
   });
 
-  console.log(user?.id)
-
-  // useEffect(() => {
-  //   if ( isNewCommentLoading || !user?.id ) {
-  //       return null;
-  //     }
-
-  // }, [])
-  
   const handleComment = async (e) => {
     e.preventDefault();
     await addComment(newComment);

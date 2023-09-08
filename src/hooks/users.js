@@ -16,8 +16,8 @@ export function useUser(uid) {
 }
 
 export function useUsers() {
-  const [users, isLoading] = useCollectionData(collection(db, "users"));
-  return { users, isLoading };
+  const [users, isUsersLoading] = useCollectionData(collection(db, "users"));
+  return { users, isUsersLoading };
 }
 
 export function useUpdateAvatar(uid) {
@@ -26,6 +26,12 @@ export function useUpdateAvatar(uid) {
   const navigate = useNavigate();
 
   async function updateAvatar() {
+
+    if (!file) {
+      toast.error("No file selected");
+
+      return;
+    }
 
     setLoading(true);
 
@@ -44,7 +50,6 @@ export function useUpdateAvatar(uid) {
   }
 
   return {
-    file,
     setFile,
     updateAvatar,
     isLoading,

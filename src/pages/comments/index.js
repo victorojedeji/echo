@@ -31,7 +31,7 @@ export default function Comments() {
         </button>
       </div>
 
-      <Post post={post} />
+      <Post post={post} postId={postId} />
       <CommentForm post={post} />
       <CommentList post={post} />
     </div>

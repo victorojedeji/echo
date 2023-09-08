@@ -10,11 +10,13 @@ import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 export default function CommentHeader({ comment }) {
   const { id, uid, date } = comment;
+
   const [toggleOptions, setToggleOptions] = useState(false);
-  const { user, isLoading } = useUser(uid);
-  const { deleteComment, deleteLoading } = useDeleteComment(id);
-  const { user: authUser, isLoading: authLoading } = useAuth();
   const [deleteModal, setDeleteModal] = useState(false);
+  
+  const { user: authUser, isLoading: authLoading } = useAuth();
+  const { user, isLoading } = useUser(uid);
+  const { deleteLoading } = useDeleteComment(id);
 
   if (isLoading) return "Loading...";
 

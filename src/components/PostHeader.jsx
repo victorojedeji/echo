@@ -6,17 +6,27 @@ import { BsThreeDots } from "react-icons/bs";
 import { FiDelete } from "react-icons/fi";
 import { useDeletePost } from "../hooks/posts";
 import UserNameBtn from "./UserNameBtn";
+import DeletePostModal from "./DeletePostModal";
+import { useAuth } from "../hooks/auth";
 
-export default function PostHeader({ post }) {
+export default function PostHeader({ post, postId }) {
   const { id, uid, date } = post;
   const [toggleOptions, setToggleOptions] = useState(false);
-  const { deletePost, deleteLoading } = useDeletePost(id);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+
+  const { user: authUser, isLoading: authLoading } = useAuth();
+  const { deletePostLoading } = useDeletePost(id);
   const { user, isLoading } = useUser(uid);
 
   if (isLoading) return "Loading...";
 
   const handleOption = () => {
     setToggleOptions(!toggleOptions);
+  };
+
+  const toggleDeleteModal = () => {
+    setDeleteModal(true)
   };
 
   return (
@@ -38,16 +48,22 @@ export default function PostHeader({ post }) {
         <BsThreeDots />
       </button>
 
-      {toggleOptions && (
+      {toggleOptions && (!authLoading && authUser.id) === uid && (
         <div className="absolute right-0 top-10 bg-white p-4 rounded-[8px]">
-          {!deleteLoading ? (
-            <button
-              className="flex gap-2 items-center pt-2 mb-2"
-              onClick={deletePost}
-            >
-              <FiDelete className="text-red-600 text-small" />
-              <span className="text-small text-red-600">Delete</span>
-            </button>
+          {!deletePostLoading ? (
+            <>
+              <button
+                className="flex gap-2 items-center pt-2 mb-2"
+                onClick={toggleDeleteModal}
+              >
+                <FiDelete className="text-red-600 text-small" />
+                <span className="text-small text-red-600">Delete</span>
+              </button>
+
+              {deleteModal && (
+                <DeletePostModal setDeleteModal={setDeleteModal} post={post} postId={postId} />
+              )}
+              </>
           ) : (
             <div>
               <svg

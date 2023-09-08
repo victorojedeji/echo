@@ -75,25 +75,16 @@ export function useToggleLike({ id, isLiked, uid }) {
 }
 
 export function useDeletePost(id) {
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deletePostLoading, setDeletePostLoading] = useState(false);
 
   async function deletePost() {
-    const res = window.confirm("Are you sure you want to delete this post?");
-
-    if (res) {
-      setDeleteLoading(true);
-
+    setDeletePostLoading(true);
       await deleteDoc(doc(db, "posts", id));
-
       const q = query(collection(db, "comments"), where("postID", "==", id));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
-
       toast.success("Post deleted!");
-
-      setDeleteLoading(false);
-    }
+      setDeletePostLoading(false);
   }
-
-  return { deletePost, deleteLoading };
+  return { deletePost, deletePostLoading };
 }

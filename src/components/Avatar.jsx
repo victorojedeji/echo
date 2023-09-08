@@ -34,7 +34,7 @@ export default function RenderAvatar({ user, size, overrideAvatar=null }) {
     };
 
     function textSize(size) {
-      if (size > 64) {
+      if (size > 100) {
         return "text-h2";
       } else {
         return "text-h5";

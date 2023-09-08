@@ -10,17 +10,15 @@ import { usePosts } from "../../hooks/posts";
 import { useUpdateAvatar, useUser } from "../../hooks/users";
 import { format } from "date-fns";
 import TextareaAutosize from "react-textarea-autosize";
-import { toast } from "react-hot-toast";
 
 
 export default function Profile() {
   const { id } = useParams();
   const { posts, postsLoading } = usePosts(id);
-  const { user: userUser, isLoading: authLoading } = useAuth();
+  const { user: authUser, isLoading: authLoading } = useAuth();
   const { user, isLoading } = useUser(id);
   const [toggleModal, setToggleModal] = useState(false);
   const {
-    file,
     setFile,
     updateAvatar,
     isLoading: fileLoading,
@@ -38,14 +36,10 @@ export default function Profile() {
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
-    // if (file) {
-    //   toast.success("Avatar added. Click save!");
-    // }
   };
 
   
 
-  // const { user, isDataLoading } = useAuth();
   if (isLoading) return "Loading...";
 
   return (
@@ -55,7 +49,7 @@ export default function Profile() {
       </h1>
       <div className="bg-gray-05 p-16 rounded-[8px] flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <RenderAvatar user={user} size={"192"} overrideAvatar={fileURL} />
+          <RenderAvatar user={user} size={"192"}  />
           <div className="w-[40%]">
             <h1 className="text-small text-head">Username</h1>
             <Link to={`${AUTH}/profile/${user.id}`}>
@@ -64,24 +58,30 @@ export default function Profile() {
               </p>
             </Link>
             <h1 className="text-small text-head">Bio</h1>
-            {user.bio == "" ? (
-              <p className="text-small italic">Update your bio!</p>
-            ) : (
-              <p className="text-para text-gray-75">{user.bio}</p>
-            )}
+            {(authUser.id !== user.id) && user.bio == "" ? <p className="text-small italic">Nothing to see here!</p>
+              : (authUser.id === user.id) && user.bio == "" ? (
+                <p className="text-small italic">Update your bio!</p>
+              ) : (
+                <p className="text-para text-gray-75">{user.bio}</p>
+              )
+            }
+            
+            
           </div>
         </div>
 
         <div>
-          <button
-            onClick={handleToggle}
-            className="flex items-center whitespace-nowrap hover:bg-base mb-4 text-base hover:text-white rounded-[64px] pt-2 pb-2 ease-in duration-300"
-          >
-            <span className="ml-8 mr-4">
-              <BsPencilSquare className="text-h5" />
-            </span>
-            <p className="text-h5 font-body font-normal mr-8">Update profile</p>
-          </button>
+          {!authLoading && (authUser.id === user.id) && (
+            <button
+              onClick={handleToggle}
+              className="flex items-center whitespace-nowrap hover:bg-base mb-4 text-base hover:text-white rounded-[64px] pt-2 pb-2 ease-in duration-300"
+            >
+              <span className="ml-8 mr-4">
+                <BsPencilSquare className="text-h5" />
+              </span>
+              <p className="text-h5 font-body font-normal mr-8">Update profile</p>
+            </button>
+          )}
 
           {toggleModal && (
             <main className="z-50 fixed top-0 left-0 w-[100vw] h-[100vh] backdrop-blur-[3px] bg-opacity-20 bg-white flex items-center justify-center">
@@ -98,7 +98,7 @@ export default function Profile() {
                 </div>
                 <div>
                   <div className="flex items-center justify-around mt-8">
-                    <RenderAvatar user={userUser} size={128} />
+                    <RenderAvatar user={user} overrideAvatar={fileURL} size={128} />
                     <label className="cursor-pointer">
                       <input
                         type="file"
