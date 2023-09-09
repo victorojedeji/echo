@@ -6,7 +6,7 @@ import RenderAvatar from "../../components/Avatar";
 import { Link, useParams } from "react-router-dom";
 import { AUTH } from "../../lib/routes";
 import PostsList from "../../components/PostsList";
-import { usePosts } from "../../hooks/posts";
+import { usePosts, useUserLikesCount } from "../../hooks/posts";
 import { useUpdateAvatar, useUser } from "../../hooks/users";
 import { format } from "date-fns";
 import TextareaAutosize from "react-textarea-autosize";
@@ -15,6 +15,7 @@ import TextareaAutosize from "react-textarea-autosize";
 export default function Profile() {
   const { id } = useParams();
   const { posts, postsLoading } = usePosts(id);
+  const {likesCount, likeCountLoading} = useUserLikesCount(id);
   const { user: authUser, isLoading: authLoading } = useAuth();
   const { user, isLoading } = useUser(id);
   const [toggleModal, setToggleModal] = useState(false);
@@ -36,9 +37,9 @@ export default function Profile() {
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
-  };
+  };  
 
-  
+  // console.log(likesCount)
 
   if (isLoading) return "Loading...";
 
@@ -173,7 +174,7 @@ export default function Profile() {
 
       <div className="border-b-2 p-4 flex items-center justify-around">
         <h1 className="text-small text-gray-75">{posts?.length} Posts</h1>
-        <h1 className="text-small text-gray-75">0 Likes</h1>
+        <h1 className="text-small text-gray-75">{likesCount?.length} Likes</h1>
         <h1 className="text-small text-gray-75">
           Joined: {format(user.date, "MMMM YYY")}
         </h1>

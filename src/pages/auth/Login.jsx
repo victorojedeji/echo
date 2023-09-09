@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { DASHBOARD, REGISTER } from "../../lib/routes";
-// import logo from '../assets/logo/Full logo.svg'
+import logo from '../../assets/logo/Full logo.svg'
 import { useLogin } from "../../hooks/auth";
 import { emailValidate, passwordValidate } from "../../utils/form-validate";
 
@@ -75,8 +75,8 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center bg-light">
-      {/* <img src={logo} alt="echo logo" className='w-[256px] h-[64px]'/> */}
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
+      {/* <img src={logo} alt="echo-logo" className='w-[256px] h-[256px]'/> */}
       <div className="w-[30%] bg-white flex flex-col items-center pt-8 pb-8 pl-2 pr-2">
         <h1 className="text-h5 font-bold font-head text-center">
           Welcome back!

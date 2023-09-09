@@ -13,7 +13,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useCollectionData,
   useDocumentData,
@@ -74,17 +74,54 @@ export function useToggleLike({ id, isLiked, uid }) {
   return { toggleLike, likeLoading };
 }
 
+
+
+export async function useUserLikesCount(uid) {
+  const [likesCount, setLikesCount] = useState([]);
+  const [likeCountLoading, setLikeCountLoading] = useState(true);
+
+  // useEffect(() => {
+    const fetchUserLikesCount = async () => {
+      try {
+        const postsCollectionRef = collection(db, "posts");
+        const querySnapshot = await getDocs(postsCollectionRef);
+
+        let accumulatedLikes = [];
+
+        querySnapshot.forEach((doc) => {
+          const postData = doc.data();
+          if (postData.uid === uid && postData.likes) {
+            accumulatedLikes.push(...postData.likes);
+          }
+        });
+
+        setLikesCount(accumulatedLikes);
+        console.log(likesCount);
+        setLikeCountLoading(false);
+      } catch (error) {
+        console.error("Error fetching user's likes:", error);
+        setLikeCountLoading(false);
+      }
+    };
+
+    fetchUserLikesCount();
+  // }, [uid, likesCount]);
+
+  return { likesCount, likeCountLoading };
+}
+
+
 export function useDeletePost(id) {
   const [deletePostLoading, setDeletePostLoading] = useState(false);
 
   async function deletePost() {
     setDeletePostLoading(true);
-      await deleteDoc(doc(db, "posts", id));
-      const q = query(collection(db, "comments"), where("postID", "==", id));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
-      toast.success("Post deleted!");
-      setDeletePostLoading(false);
+    await deleteDoc(doc(db, "posts", id));
+    const q = query(collection(db, "comments"), where("postId", "==", id));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => deleteDoc(doc.ref));
+    toast.success("Post deleted!");
+    setDeletePostLoading(false);
   }
   return { deletePost, deletePostLoading };
 }

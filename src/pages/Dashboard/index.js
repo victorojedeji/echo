@@ -30,9 +30,9 @@ export default function Dashboard() {
       <div className="bg-gray-05 p-4 rounded-[8px]">
         <h1 className="text-h5 text-medium mb-4 ">New Post</h1>
 
-        <div className="flex gap-4 w-full">
+        <div className="flex justify-between gap-4 w-full">
           <RenderAvatar user={user} size={56} />
-          <form className="w-full flex flex-col" onSubmit={handlePublicPost}>
+          <form className="w-[90%] flex flex-col" onSubmit={handlePublicPost}>
             <TextareaAutosize
               placeholder="What is happening?!"
               className="resize-none p-4 w-[100%] min-h-24 border-0 text-lg font-normal text-gray-600 focus:outline-none rounded-[8px]"
