@@ -16,7 +16,7 @@ export default function Users() {
     <div className="h-full w-full flex flex-wrap justify-between">
       {
         users.map((user) => (
-          <User user={user} />
+          <User user={user} key={user.id} />
         ))
       }
     </div>

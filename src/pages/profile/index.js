@@ -26,11 +26,10 @@ export default function Profile() {
     fileURL,
   } = useUpdateAvatar(user?.id); 
 
-
   const updateFiles = () => {
     updateAvatar();
   }
-
+  console.log(likesCount);
   const handleToggle = () => {
     setToggleModal(!toggleModal);
   };
@@ -39,7 +38,6 @@ export default function Profile() {
     setFile(e.target.files[0]);
   };  
 
-  // console.log(likesCount)
 
   if (isLoading) return "Loading...";
 
@@ -174,7 +172,7 @@ export default function Profile() {
 
       <div className="border-b-2 p-4 flex items-center justify-around">
         <h1 className="text-small text-gray-75">{posts?.length} Posts</h1>
-        <h1 className="text-small text-gray-75">{likesCount?.length} Likes</h1>
+        <h1 className="text-small text-gray-75">{likeCountLoading ? "Loading..." : likesCount} Likes</h1>
         <h1 className="text-small text-gray-75">
           Joined: {format(user.date, "MMMM YYY")}
         </h1>

@@ -15,6 +15,9 @@ export function useUser(uid) {
   return { user, isLoading };
 }
 
+
+
+
 export function useUsers() {
   const [users, isUsersLoading] = useCollectionData(collection(db, "users"));
   return { users, isUsersLoading };

@@ -8,6 +8,8 @@ import Profile from "../pages/profile";
 import Users from "../pages/users";
 import Dashboard from "../pages/Dashboard";
 import Comments from "../pages/comments";
+import Messages from "../pages/messages";
+import Chat from "../pages/chat";
 
 export const ROOT = "/";
 export const LOGIN = "/login";
@@ -18,6 +20,8 @@ export const DASHBOARD = "/auth/posts";
 export const PROFILE = "/auth/profile/:id";
 export const COMMENTS = "/auth/comments/:postId";
 export const USERS = "/auth/users";
+export const MESSAGES = "/auth/messages";
+export const DM = "/auth/messages/:id";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +56,16 @@ export const router = createBrowserRouter([
       {
         path: COMMENTS,
         element: <Comments />,
+      },
+      {
+        path: MESSAGES,
+        element: <Messages />,
+        children: [
+         {
+          path: DM, 
+          element: <Chat />,
+         }
+        ]
       },
     ],
   },

@@ -13,7 +13,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useCollectionData,
   useDocumentData,
@@ -76,11 +76,49 @@ export function useToggleLike({ id, isLiked, uid }) {
 
 
 
+// export async function useUserLikesCount(uid) {
+//   const [likesCount, setLikesCount] = useState(0);
+//   const [likeCountLoading, setLikeCountLoading] = useState(true);
+//   const likesCountRef = useRef(0); 
+
+//   useEffect(() => {
+//     const fetchUserLikesCount = async () => {
+//       try {
+//         const postsCollectionRef = collection(db, "posts");
+//         const querySnapshot = await getDocs(postsCollectionRef);
+
+//         let accumulatedLikes = 0;
+
+//         querySnapshot.forEach((doc) => {
+//           const postData = doc.data();
+//           if (postData.uid === uid && postData.likes) {
+//             accumulatedLikes += postData.likes.length;
+//           }
+//         });
+
+//         likesCountRef.current = accumulatedLikes;
+//         setLikesCount(accumulatedLikes);
+//         setLikeCountLoading(false);
+//       } catch (error) {
+//         console.error("Error fetching user's likes:", error);
+//         setLikeCountLoading(false);
+//       }
+//     };
+
+//     fetchUserLikesCount();
+//   }, [uid]);
+
+//   return { likesCount: likesCountRef.current, likeCountLoading };
+// }
+
+
+
 export async function useUserLikesCount(uid) {
   const [likesCount, setLikesCount] = useState([]);
   const [likeCountLoading, setLikeCountLoading] = useState(true);
+  const likesCountRef = useRef([]);
 
-  // useEffect(() => {
+  useEffect(() => {
     const fetchUserLikesCount = async () => {
       try {
         const postsCollectionRef = collection(db, "posts");
@@ -95,19 +133,19 @@ export async function useUserLikesCount(uid) {
           }
         });
 
-        setLikesCount(accumulatedLikes);
-        console.log(likesCount);
+        likesCountRef.current = accumulatedLikes;
+        setLikesCount(accumulatedLikes);    
         setLikeCountLoading(false);
       } catch (error) {
         console.error("Error fetching user's likes:", error);
         setLikeCountLoading(false);
       }
     };
-
+    // console.log(likesCount);
     fetchUserLikesCount();
-  // }, [uid, likesCount]);
+  }, [uid]);
 
-  return { likesCount, likeCountLoading };
+  return { likesCount: likesCountRef.current, likeCountLoading };
 }
 
 

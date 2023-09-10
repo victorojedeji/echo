@@ -4,7 +4,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
-import { AUTH, DASHBOARD, PROFILE, USERS } from "../lib/routes";
+import { AUTH, DASHBOARD, MESSAGES, USERS } from "../lib/routes";
 import { useAuth } from "../hooks/auth";
 
 export default function Sidebar() {
@@ -32,7 +32,7 @@ export default function Sidebar() {
         </button>
       </Link>
 
-      <Link>
+      <Link to={`${MESSAGES}`}>
         <button className="flex items-center hover:bg-base mb-4 text-base hover:text-white rounded-[64px] pt-2 pb-2 ease-in duration-300">
           <span className="ml-8 mr-4">
             <BiMessageSquareDetail className="text-h5" />

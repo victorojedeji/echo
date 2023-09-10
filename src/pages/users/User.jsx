@@ -7,7 +7,6 @@ export default function User({ user }) {
   return (
     <div
       className="w-[200px] h-[200px] rounded-[8px] border-2 p-2"
-      key={user.id}
     >
       <div className="w-full flex items-center justify-center">
         <RenderAvatar user={user} size={96} />
