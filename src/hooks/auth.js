@@ -70,6 +70,7 @@ export function useLogin() {
 export function useRegister() {
   const [isRegisterLoading, setIsRegisterLoading] = useState(false);
   const navigate = useNavigate();
+  
 
   async function register({
     username,
@@ -100,6 +101,7 @@ export function useRegister() {
           bgColor: randomColor, 
           email: email,
         });
+        await setDoc(doc(db, "userChats", response.user.uid), {});
 
         toast.success("Registration Successful!");
 

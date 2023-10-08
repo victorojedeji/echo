@@ -22,7 +22,6 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-
       <div className="relative flex ">
         <Sidebar />
         <Outlet />

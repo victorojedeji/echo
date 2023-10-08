@@ -48,7 +48,6 @@ export default function Register() {
       redirectTo: DASHBOARD,
     });
     if (success) {
-      console.log(email, userName, password);
       setUserName("");
       setEmail("");
       setPassword("");

@@ -6,10 +6,10 @@ export default function Messages() {
   
   return (
     <div className='p-4 min-h-full flex'>
-      <div className='min-w-[40vw]'>
+      <div className='w-[55vw]'>
         <Outlet />
       </div>
-      <div className='border-x-2'>
+      <div className='border-l-2 w-[20vw]'>
         <UsersPanel />
       </div>
     </div>
