@@ -1,12 +1,10 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../../lib/firebase";
 import Message from "./Message";
-import { ChatContext } from "../../context/ChatContext";
 
 const ChatMessages = ({combinedId}) => {
   const [messages, setMessages] = useState([]);
-  const { data } = useContext(ChatContext);
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", combinedId), (doc) => {

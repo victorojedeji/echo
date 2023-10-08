@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ChatModule from "../messages/ChatModule";
 import { useCurrentUser, useUser } from "../../hooks/users";
