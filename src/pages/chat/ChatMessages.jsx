@@ -18,7 +18,6 @@ const ChatMessages = ({combinedId}) => {
     };
   }, [combinedId]);
 
-  console.log(messages);
 
   return (
     <div className="">

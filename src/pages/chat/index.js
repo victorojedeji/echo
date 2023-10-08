@@ -30,7 +30,6 @@ export default function Chat() {
       ? currentUser.uid + user?.id
       : user?.id + currentUser.uid;
 
-  console.log(combinedId);
   if (!user) return null;
   if (isUserLoading) return "Loading user...";
 
