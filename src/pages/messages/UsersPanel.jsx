@@ -12,7 +12,6 @@ export default function UsersPanel({ chats }) {
 
   if (!users) return null;
 
-  console.log("chats:", chats);
 
   const filteredUsers = users.filter((user) =>
     user?.username?.toLowerCase().includes(filterText.toLowerCase())

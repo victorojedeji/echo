@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AUTH } from "../../lib/routes";
-import ChatAvatar from "../../components/ChatAvatar";
 import {
   doc,
   getDoc,
@@ -11,8 +10,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { useCurrentUser } from "../../hooks/users";
+import ChatAvatar from "../../components/ChatAvatar";
 
-export default function ChatModule({ user, setFilterText }) {
+export default function ChatModule({ user }) {
   const { currentUser, error, username } = useCurrentUser();
 
   const handleSelect = async () => {
@@ -46,16 +46,16 @@ export default function ChatModule({ user, setFilterText }) {
       }
     } catch (err) {}
 
-    setFilterText("");
+    // setFilterText("");
   };
   return (
     <Link to={`${AUTH}/messages/${user?.id}`} onClick={handleSelect}>
-      <div className="border-b-2 flex items-center py-4 px-2">
+      <div className="border-b-2 flex items-center py-2 px-2 hover:bg-gray-200">
         <div>
-          <ChatAvatar user={user} size={"36"} />
+          <ChatAvatar user={user} size={"30"} />
         </div>
-        <div>
-          <p>{user.username}</p>
+        <div className="ml-2">
+          <p className="text-small">{user.username}</p>
         </div>
       </div>
     </Link>

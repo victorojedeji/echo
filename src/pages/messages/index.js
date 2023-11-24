@@ -17,13 +17,11 @@ export default function Messages() {
 
   const isRouteEmpty = location.pathname === "/auth/messages";
 
-    //  ========= For Chats ==========
   
     useEffect(() => {
       if (currentUser.uid) {
         const getChats = () => {
           const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-            // console.log("Received chat data:", doc.data());
             setChats(doc.data());
           });
     
@@ -40,14 +38,12 @@ export default function Messages() {
   return (
     <div className="p-4 min-h-full flex">
       <div>
-        {/* <div>
-          <ChatList />
-        </div> */}
       </div>
       <div className="w-[55vw]">
         {isRouteEmpty ? (
-          <div className="w-full h-full flex justify-center">
-            <p className=" text-h5 text-base">Search for a username...</p>
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <p className=" text-h5 text-base font-medium">Select a message.</p>
+            <p className=" text-small text-base">Choose from your existing conversations or search for a new username.</p>
           </div>
         ) : (
           <Outlet />

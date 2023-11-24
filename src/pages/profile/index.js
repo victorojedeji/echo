@@ -6,16 +6,15 @@ import RenderAvatar from "../../components/Avatar";
 import { Link, useParams } from "react-router-dom";
 import { AUTH } from "../../lib/routes";
 import PostsList from "../../components/PostsList";
-import { usePosts, useUserLikesCount } from "../../hooks/posts";
+import { usePosts, useTotalLikes } from "../../hooks/posts";
 import { useUpdateAvatar, useUser } from "../../hooks/users";
 import { format } from "date-fns";
 import TextareaAutosize from "react-textarea-autosize";
 
-
 export default function Profile() {
   const { id } = useParams();
   const { posts, postsLoading } = usePosts(id);
-  const {likesCount, likeCountLoading} = useUserLikesCount(id);
+  const {totalLikes} = useTotalLikes(id);
   const { user: authUser, isLoading: authLoading } = useAuth();
   const { user, isLoading } = useUser(id);
   const [toggleModal, setToggleModal] = useState(false);
@@ -24,20 +23,21 @@ export default function Profile() {
     updateAvatar,
     isLoading: fileLoading,
     fileURL,
-  } = useUpdateAvatar(user?.id); 
+  } = useUpdateAvatar(user?.id);
 
   const updateFiles = () => {
     updateAvatar();
-  }
-  console.log(likesCount);
+  };
+
+  console.log(totalLikes);
+
   const handleToggle = () => {
     setToggleModal(!toggleModal);
   };
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
-  };  
-
+  };
 
   if (isLoading) return "Loading...";
 
@@ -48,7 +48,7 @@ export default function Profile() {
       </h1>
       <div className="bg-gray-05 p-16 rounded-[8px] flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <RenderAvatar user={user} size={"192"}  />
+          <RenderAvatar user={user} size={"192"} />
           <div className="w-[40%]">
             <h1 className="text-small text-head">Username</h1>
             <Link to={`${AUTH}/profile/${user.id}`}>
@@ -57,20 +57,18 @@ export default function Profile() {
               </p>
             </Link>
             <h1 className="text-small text-head">Bio</h1>
-            {(authUser.id !== user.id) && user.bio == "" ? <p className="text-small italic">Nothing to see here!</p>
-              : (authUser.id === user.id) && user.bio == "" ? (
-                <p className="text-small italic">Update your bio!</p>
-              ) : (
-                <p className="text-para text-gray-75">{user.bio}</p>
-              )
-            }
-            
-            
+            {authUser.id !== user.id && user.bio === "" ? (
+              <p className="text-small italic">Nothing to see here!</p>
+            ) : authUser.id === user.id && user.bio === "" ? (
+              <p className="text-small italic">Update your bio!</p>
+            ) : (
+              <p className="text-para text-gray-75">{user.bio}</p>
+            )}
           </div>
         </div>
 
         <div>
-          {!authLoading && (authUser.id === user.id) && (
+          {!authLoading && authUser.id === user.id && (
             <button
               onClick={handleToggle}
               className="flex items-center whitespace-nowrap hover:bg-base mb-4 text-base hover:text-white rounded-[64px] pt-2 pb-2 ease-in duration-300"
@@ -78,7 +76,9 @@ export default function Profile() {
               <span className="ml-8 mr-4">
                 <BsPencilSquare className="text-h5" />
               </span>
-              <p className="text-h5 font-body font-normal mr-8">Update profile</p>
+              <p className="text-h5 font-body font-normal mr-8">
+                Update profile
+              </p>
             </button>
           )}
 
@@ -97,7 +97,11 @@ export default function Profile() {
                 </div>
                 <div>
                   <div className="flex items-center justify-around mt-8">
-                    <RenderAvatar user={user} overrideAvatar={fileURL} size={128} />
+                    <RenderAvatar
+                      user={user}
+                      overrideAvatar={fileURL}
+                      size={128}
+                    />
                     <label className="cursor-pointer">
                       <input
                         type="file"
@@ -125,12 +129,21 @@ export default function Profile() {
                         </p>
                       </div>
                     </label>
-                    {fileLoading 
-                    ? <button className="bg-base rounded-[64px] pr-8 pl-8 pt-2 pb-2 text-white whitespace-nowrap" onClick={updateFiles}>
-                      Processing...
-                    </button>
-                    : <button className="bg-base rounded-[64px] pr-8 pl-8 pt-2 pb-2 text-white whitespace-nowrap" onClick={updateFiles}>Upload</button>
-                     }
+                    {fileLoading ? (
+                      <button
+                        className="bg-base rounded-[64px] pr-8 pl-8 pt-2 pb-2 text-white whitespace-nowrap"
+                        onClick={updateFiles}
+                      >
+                        Processing...
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-base rounded-[64px] pr-8 pl-8 pt-2 pb-2 text-white whitespace-nowrap"
+                        onClick={updateFiles}
+                      >
+                        Upload
+                      </button>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between mt-8 gap-8">
@@ -149,20 +162,14 @@ export default function Profile() {
                       placeholder="Something about yourself!"
                       className="resize-none p-4 w-[100%] min-h-24 border-2 text-lg font-normal text-gray-600 focus:outline-none rounded-[8px]"
                       required
-                      // value={text}
-                      // onChange={(e) => {
-                      //   setText(e.target.value);
-                      // }}
+                      
                     />
                     <button className="rounded-[64px] pr-8 pl-8 pt-2 pb-2 bg-base text-white whitespace-nowrap">
                       Update Bio
                     </button>
                   </div>
 
-                    
-                  {/* <div className="flex items-center justify-center mt-16">
-                
-                  </div> */}
+                  
                 </div>
               </section>
             </main>
@@ -172,7 +179,9 @@ export default function Profile() {
 
       <div className="border-b-2 p-4 flex items-center justify-around">
         <h1 className="text-small text-gray-75">{posts?.length} Posts</h1>
-        <h1 className="text-small text-gray-75">{likeCountLoading ? "Loading..." : likesCount} Likes</h1>
+        <h1 className="text-small text-gray-75">
+          {totalLikes} Likes
+        </h1>
         <h1 className="text-small text-gray-75">
           Joined: {format(user.date, "MMMM YYY")}
         </h1>

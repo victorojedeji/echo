@@ -74,79 +74,39 @@ export function useToggleLike({ id, isLiked, uid }) {
   return { toggleLike, likeLoading };
 }
 
-
-
-// export async function useUserLikesCount(uid) {
-//   const [likesCount, setLikesCount] = useState(0);
-//   const [likeCountLoading, setLikeCountLoading] = useState(true);
-//   const likesCountRef = useRef(0); 
-
-//   useEffect(() => {
-//     const fetchUserLikesCount = async () => {
-//       try {
-//         const postsCollectionRef = collection(db, "posts");
-//         const querySnapshot = await getDocs(postsCollectionRef);
-
-//         let accumulatedLikes = 0;
-
-//         querySnapshot.forEach((doc) => {
-//           const postData = doc.data();
-//           if (postData.uid === uid && postData.likes) {
-//             accumulatedLikes += postData.likes.length;
-//           }
-//         });
-
-//         likesCountRef.current = accumulatedLikes;
-//         setLikesCount(accumulatedLikes);
-//         setLikeCountLoading(false);
-//       } catch (error) {
-//         console.error("Error fetching user's likes:", error);
-//         setLikeCountLoading(false);
-//       }
-//     };
-
-//     fetchUserLikesCount();
-//   }, [uid]);
-
-//   return { likesCount: likesCountRef.current, likeCountLoading };
-// }
-
-
-
-export async function useUserLikesCount(uid) {
-  const [likesCount, setLikesCount] = useState([]);
-  const [likeCountLoading, setLikeCountLoading] = useState(true);
-  const likesCountRef = useRef([]);
+export function useTotalLikes(uid) {
+  const [totalLikes, setTotalLikes] = useState(0);
 
   useEffect(() => {
-    const fetchUserLikesCount = async () => {
+    const fetchTotalLikes = async () => {
       try {
-        const postsCollectionRef = collection(db, "posts");
-        const querySnapshot = await getDocs(postsCollectionRef);
+        const q = query(
+          collection(db, 'posts'),
+          where('uid', '==', uid)
+        );
 
-        let accumulatedLikes = [];
+        const querySnapshot = await getDocs(q);
+
+        let likesCount = 0;
 
         querySnapshot.forEach((doc) => {
           const postData = doc.data();
-          if (postData.uid === uid && postData.likes) {
-            accumulatedLikes.push(...postData.likes);
-          }
+          likesCount += postData.likes.length;
         });
 
-        likesCountRef.current = accumulatedLikes;
-        setLikesCount(accumulatedLikes);    
-        setLikeCountLoading(false);
+        setTotalLikes(likesCount);
       } catch (error) {
-        console.error("Error fetching user's likes:", error);
-        setLikeCountLoading(false);
+        console.error('Error fetching total likes:', error);
       }
     };
-    // console.log(likesCount);
-    fetchUserLikesCount();
+
+    fetchTotalLikes();
   }, [uid]);
 
-  return { likesCount: likesCountRef.current, likeCountLoading };
+
+  return totalLikes;
 }
+
 
 
 export function useDeletePost(id) {

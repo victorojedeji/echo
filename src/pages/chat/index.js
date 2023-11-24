@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
 import ChatMessages from "./ChatMessages";
+import ChatAvatar from "../../components/ChatAvatar";
 
 export default function Chat() {
   const { id } = useParams();
@@ -91,7 +92,14 @@ export default function Chat() {
 
   return (
     <div className="pr-4 h-full relative">
-      <ChatModule user={user} />
+      <div className="border-b-2 flex items-center py-2 px-2 hover:bg-gray-200">
+        <div>
+          <ChatAvatar user={user} size={"36"} />
+        </div>
+        <div className="ml-4">
+          <p className="text-h5">{user.username}</p>
+        </div>
+      </div>
 
       <div className="border-b-2 mb-4 h-[60vh] overflow-y-auto">
         <ChatMessages combinedId={combinedId} />
